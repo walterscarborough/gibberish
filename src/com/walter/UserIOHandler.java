@@ -19,15 +19,19 @@ public class UserIOHandler {
     public void displayInputPrompt() {
 
         String greeting = "Welcome to the dictionary."
-                        + " Please enter the word and language that you would like translated."
-                        ;
+                + " Please enter the word and language that you would like translated.";
 
         System.out.println(greeting);
 
-        String userInput = collectUserInput();
+        String userInput = this.collectUserInput();
+
+        LanguageHandler languageHandler = new LanguageHandler();
+        String translatedWord = languageHandler.lookupInputWord(userInput, "TODO: replace this placeholder");
+
+        this.displayOutput(translatedWord);
     }
 
-    public void displayOutput() {
-
+    public void displayOutput(String output) {
+        System.out.println("Your translation is: '" + output + "'. Thanks!");
     }
 }
