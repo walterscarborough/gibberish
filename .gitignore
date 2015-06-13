@@ -1,3 +1,8 @@
+# Gibberish specific
+lookupActionLog.txt
+unknownWordLog.txt
+
+# General Java
 *.class
 
 # Mobile Tools for Java (J2ME)

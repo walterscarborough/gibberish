@@ -11,27 +11,49 @@ public class UserIOHandler {
 
         String userInput = scanner.nextLine();
 
-        System.out.println("input was " + userInput);
+        //System.out.println("input was " + userInput);
 
         return userInput;
     }
 
     public void displayInputPrompt() {
 
-        String greeting = "Welcome to the dictionary."
-                + " Please enter the word and language that you would like translated.";
+        String userInputGreeting = "Welcome to the Gibberish Dictionary!"
+                + "\n"
+                + "\n"
+                + "Please enter the word that you would like translated."
+                + "\n"
+                + "e.g. hello"
+                + "\n"
+                ;
 
-        System.out.println(greeting);
+        System.out.println(userInputGreeting);
 
         String userInput = this.collectUserInput();
 
+        String languageInputGreeting = "Great, thanks. Which language would you like to use?"
+                + "\n"
+                + "e.g. Japanese"
+                + "\n"
+                ;
+
+        System.out.println(languageInputGreeting);
+
+        String languageInput = this.collectUserInput();
+
         LanguageHandler languageHandler = new LanguageHandler();
-        String translatedWord = languageHandler.lookupInputWord(userInput, "TODO: replace this placeholder");
+        String translatedWord = languageHandler.lookupInputWord(userInput, languageInput);
 
         this.displayOutput(translatedWord);
     }
 
     public void displayOutput(String output) {
-        System.out.println("Your translation is: '" + output + "'. Thanks!");
+
+        String outputMessage = "Your translation is: '" + output + "'."
+            + "\n"
+            + "Thanks!"
+            ;
+
+        System.out.println(outputMessage);
     }
 }

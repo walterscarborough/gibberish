@@ -10,7 +10,6 @@ public class LanguageBank {
 
     Map<String,String> japaneseLanguageBank = new HashMap<String, String>();
 
-
     public LanguageBank() {
         this.japaneseLanguageBank.put("hello", "こんにちは");
     }
