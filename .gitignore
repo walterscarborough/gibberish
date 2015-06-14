@@ -1,6 +1,6 @@
 # Gibberish specific
-lookupActionLog.txt
-unknownWordLog.txt
+lookupActionLog.json
+unknownWordLog.json
 
 # General Java
 *.class

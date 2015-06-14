@@ -18,38 +18,64 @@ public class UserIOHandler {
 
     public void displayInputPrompt() {
 
-        String userInputGreeting = "Welcome to the Gibberish Dictionary!"
+        String userActionGreeting = "Welcome to the Gibberish Dictionary!"
                 + "\n"
                 + "\n"
-                + "Please enter the word that you would like translated."
+                + "What would you like to do?"
                 + "\n"
-                + "e.g. hello"
+                + "1 - Lookup Word"
                 + "\n"
-                ;
-
-        System.out.println(userInputGreeting);
-
-        String userInput = this.collectUserInput();
-
-        String languageInputGreeting = "Great, thanks. Which language would you like to use?"
+                + "2 - Add Translation"
                 + "\n"
-                + "e.g. Japanese"
+                + "3 - Remove Translation"
                 + "\n"
                 ;
 
-        System.out.println(languageInputGreeting);
 
-        String languageInput = this.collectUserInput();
+        System.out.println(userActionGreeting);
 
-        LanguageHandler languageHandler = new LanguageHandler();
-        String translatedWord = languageHandler.lookupInputWord(userInput, languageInput);
+        String userAction = this.collectUserInput();
 
-        this.displayOutput(translatedWord);
+        switch (userAction) {
+            case "1":
+
+                String userInputGreeting = "\n"
+                    + "Please enter the word that you would like translated."
+                    + "\n"
+                    + "e.g. hello"
+                    + "\n"
+                    ;
+
+                System.out.println(userInputGreeting);
+
+                String userInput = this.collectUserInput();
+
+                String languageInputGreeting = "\n"
+                        + "Great, thanks. Which language would you like to use?"
+                        + "\n"
+                        + "e.g. Japanese"
+                        + "\n"
+                        ;
+
+                System.out.println(languageInputGreeting);
+
+                String languageInput = this.collectUserInput();
+
+                LanguageHandler languageHandler = new LanguageHandler();
+                String translatedWord = languageHandler.lookupInputWord(userInput, languageInput);
+
+                this.displayOutput(translatedWord);
+                break;
+
+            case "2":
+                break;
+        }
     }
 
     public void displayOutput(String output) {
 
-        String outputMessage = "Your translation is: '" + output + "'."
+        String outputMessage = "\n"
+            + "Your translation is: '" + output + "'."
             + "\n"
             + "Thanks!"
             ;
