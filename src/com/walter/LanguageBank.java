@@ -3,6 +3,8 @@ package com.walter;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -10,26 +12,57 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class LanguageBank {
 
-    Map<String,String> japaneseLanguageBank = new HashMap<>();
+    Map<String, HashMap<String, String>> languageStorage = new HashMap<String, HashMap<String, String>>();
 
     public LanguageBank() {
 
         ObjectMapper mapper = new ObjectMapper();
 
         try {
-            this.japaneseLanguageBank = mapper.readValue(new File("japaneseLanguageBank.json"), Map.class);
+            this.languageStorage = mapper.readValue(new File("languageStorage.json"), new TypeReference<HashMap<String, HashMap<String,String>>>() {});
         }
         catch (IOException e) {
             // No op
         }
     }
 
-    public void addTranslation() {
-        // put in this.japaneseLanguageBank
-        // mapper.writeValue(new File("japaneseLanguageBank.json"), japaneseLanguageBank);
+    public void addTranslation(String addTranslationSourceWord, String addTranslationTargetLanguage, String addTranslationTargetWord) {
+        // put in this.languageStorage
+
+        HashMap<String, String> targetLanguageHash = this.languageStorage.get(addTranslationTargetLanguage);
+
+        if (targetLanguageHash.isEmpty()) {
+            targetLanguageHash = new HashMap<String, String>();
+        }
+
+        targetLanguageHash.put(addTranslationSourceWord, addTranslationTargetWord);
+
+        this.languageStorage.put(addTranslationTargetLanguage, targetLanguageHash);
+
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.writeValue(new File("languageStorage.json"), this.languageStorage);
+        } catch (IOException e) {
+            // No op
+        }
     }
 
-    public void removeTranslation() {
+    public void removeTranslation(String removeTranslationSourceWord, String removeTranslationTargetLanguage) {
+        HashMap<String, String> targetLanguageHash = this.languageStorage.get(removeTranslationTargetLanguage);
 
+        if (targetLanguageHash.isEmpty()) {
+            targetLanguageHash = new HashMap<String, String>();
+        }
+
+        targetLanguageHash.remove(removeTranslationSourceWord);
+
+        this.languageStorage.put(removeTranslationTargetLanguage, targetLanguageHash);
+
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.writeValue(new File("languageStorage.json"), this.languageStorage);
+        } catch (IOException e) {
+            // No op
+        }
     }
 }

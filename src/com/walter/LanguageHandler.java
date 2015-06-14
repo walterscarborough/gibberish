@@ -8,7 +8,6 @@ import java.lang.String;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -26,12 +25,10 @@ public class LanguageHandler {
         try {
             this.unknownWordLog = mapper.readValue(new File("unknownWordLog.json"), new TypeReference<List<HashMap<String,String>>>() {});
             this.lookupActionLog = mapper.readValue(new File("lookupActionLog.json"), new TypeReference<List<HashMap<String,String>>>() {});
-
-            System.out.println("unknown log is: " + this.unknownWordLog);
         }
         catch (IOException e) {
             // No op
-            System.out.println("serialization ex is: " + e);
+            //System.out.println("serialization ex is: " + e);
         }
     }
 
@@ -39,12 +36,12 @@ public class LanguageHandler {
 
         LanguageBank languageBank = new LanguageBank();
 
-        if (targetLanguage.equals("Japanese") && languageBank.japaneseLanguageBank.containsKey(inputWord)) {
+        if (targetLanguage.equals("Japanese") && languageBank.languageStorage.get(targetLanguage).containsKey(inputWord)) {
 
             // Default lookup logging
             this.logLookupAction(inputWord, targetLanguage);
 
-            String translatedWord = languageBank.japaneseLanguageBank.get(inputWord);
+            String translatedWord = languageBank.languageStorage.get(targetLanguage).get(inputWord);
 
             return translatedWord;
         }
@@ -58,21 +55,6 @@ public class LanguageHandler {
     }
 
     public void logUnknownWord(String inputWord, String targetLanguage) {
-
-        /*
-        try (
-            PrintWriter out = new PrintWriter(
-                new BufferedWriter(
-                    new FileWriter("unknownWordLog.txt", true)
-                )
-            )
-        ) {
-            out.println("inputWord: " + inputWord + "; targetLanguage: " + targetLanguage);
-        }
-        catch (IOException e) {
-            // No op
-        }
-        */
 
         try {
             HashMap<String, String> lookup = new HashMap<>();
@@ -94,21 +76,6 @@ public class LanguageHandler {
 
     public void logLookupAction(String inputWord, String targetLanguage) {
 
-        /*
-        try (
-            PrintWriter out = new PrintWriter(
-                new BufferedWriter(
-                    new FileWriter("lookupActionLog.txt", true)
-                )
-            )
-        ) {
-            out.println("inputWord: " + inputWord + "; targetLanguage: " + targetLanguage);
-        }
-        catch (IOException e) {
-            // No op
-        }
-        */
-
         try {
             HashMap<String, String> lookup = new HashMap<>();
             lookup.put("word", inputWord);
@@ -123,7 +90,7 @@ public class LanguageHandler {
             ObjectMapper mapper = new ObjectMapper();
             mapper.writeValue(new File("lookupActionLog.json"), this.lookupActionLog);
         } catch (IOException e) {
-            System.out.println("logLookup exceptoin: " + e);
+            System.out.println("logLookup exception: " + e);
             // No op
         }
     }
