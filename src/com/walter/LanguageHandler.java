@@ -32,28 +32,6 @@ public class LanguageHandler {
         }
     }
 
-    public String lookupInputWord(String inputWord, String targetLanguage) {
-
-        LanguageBank languageBank = new LanguageBank();
-
-        if (targetLanguage.equals("Japanese") && languageBank.languageStorage.get(targetLanguage).containsKey(inputWord)) {
-
-            // Default lookup logging
-            this.logLookupAction(inputWord, targetLanguage);
-
-            String translatedWord = languageBank.languageStorage.get(targetLanguage).get(inputWord);
-
-            return translatedWord;
-        }
-        else {
-
-            // Unknown lookup logging
-            this.logUnknownWord(inputWord, targetLanguage);
-        }
-
-        return "";
-    }
-
     public void logUnknownWord(String inputWord, String targetLanguage) {
 
         try {

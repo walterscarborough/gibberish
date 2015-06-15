@@ -26,6 +26,28 @@ public class LanguageBank {
         }
     }
 
+    public String lookupInputWord(String inputWord, String targetLanguage) {
+
+        LanguageHandler languageHandler = new LanguageHandler();
+
+        if (targetLanguage.equals("Japanese") && this.languageStorage.get(targetLanguage).containsKey(inputWord)) {
+
+            // Default lookup logging
+            languageHandler.logLookupAction(inputWord, targetLanguage);
+
+            String translatedWord = this.languageStorage.get(targetLanguage).get(inputWord);
+
+            return translatedWord;
+        }
+        else {
+
+            // Unknown lookup logging
+            languageHandler.logUnknownWord(inputWord, targetLanguage);
+        }
+
+        return "";
+    }
+
     public void addTranslation(String addTranslationSourceWord, String addTranslationTargetLanguage, String addTranslationTargetWord) {
         // put in this.languageStorage
 
